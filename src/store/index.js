@@ -71,7 +71,12 @@ const store = new Vuex.Store({
         return false;
       });
       const routes = objDeepCopy(constantRouterMap);
-      routes[0].children = [...routes[0].children, ...accountRoutes];
+      routes[0].children = [...routes[0].children, ...accountRoutes].sort((x, y) => {
+        return x.order - y.order;
+      });
+      if (routes[0].children.length === 1) {
+        routes[0].children[0].path = '/';
+      }
       commit('SET_ROUTES', routes);
     },
     // 获取用户信息

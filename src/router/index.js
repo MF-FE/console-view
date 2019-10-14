@@ -16,12 +16,8 @@ export const constantRouterMap = [{
     path: '/',
     component: Layout,
     children: [{
-    //   path: '/',
-    //   name: '首页',
-    //   component: () => import('@/views/home'),
-    //   meta: { icon: 'el-icon-pie-chart' }
-    // }, {
-      path: '/',
+      path: '/activity',
+      order: 2,
       name: '活动报名',
       component: () => import('@/views/activity'),
       meta: { icon: 'el-icon-document' }
@@ -37,14 +33,22 @@ export const constantRouterMap = [{
 ];
 
 export const asyncRouterMap = [{
+  path: '/',
+  name: '首页',
+  order: 1,
+  component: () => import('@/views/home'),
+  meta: { role: ['ADMIN', 'SUPER_ADMIN'], icon: 'el-icon-pie-chart' }
+}, {
   path: '/activity-edit',
   name: '活动管理',
+  order: 3,
   component: () => import('@/views/activity/edit'),
   meta: { role: ['ADMIN', 'SUPER_ADMIN'], icon: 'el-icon-date' },
 
 }, {
   path: '/admin',
   name: '账号管理',
+  order: 4,
   component: () => import('@/views/admin'),
   meta: { role: ['SUPER_ADMIN'], icon: 'el-icon-setting' },
 }]
