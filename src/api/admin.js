@@ -5,11 +5,11 @@ export function loginApi(data) {
 }
 
 export function findAdminInfoApi() {
-  return $http.get('/api/admin');
+  return $http.get('/api/admin/info');
 }
 
 export function findAdminListApi() {
-  return $http.get('/api/adminAll');
+  return $http.get('/api/admin');
 }
 
 export function saveAdminApi(data) {

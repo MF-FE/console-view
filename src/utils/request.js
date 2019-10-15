@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import router from './../router';
 import { Message } from 'element-ui';
 
-let baseURL = process.env.NODE_ENV === 'production' ? 'http://api.wesion.cn' : 'http://localhost:3000/';
+let baseURL = process.env.NODE_ENV === 'production' ? 'http://api.wesion.cn' : 'http://localhost:3000';
 
 const $http = axios.create({
   baseURL
@@ -25,6 +25,10 @@ $http.interceptors.request.use(
 
 $http.interceptors.response.use(
   response => {
+    console.log(response)
+    if (response.status !== 200) {
+      Message.error('啊偶！断网了...');
+    }
     // 未登录或者过期
     if (response.data.code === '02') {
       Cookie.remove('token');
