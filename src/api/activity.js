@@ -7,3 +7,7 @@ export function findEnorllListApi(activityName, pageNo) {
 export function downEnorllExcelApi(activityName) {
   return $http.get(`/api/activityExcel?name=${activityName}`);
 }
+
+export function findEnorllAllApi(activityName) {
+  return $http.get(`/api/activityAll/${activityName}`);
+}

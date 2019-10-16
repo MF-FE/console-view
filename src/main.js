@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VCharts from 'v-charts';
 import ElementUI from 'element-ui';
 import 'normalize.css/normalize.css';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -14,6 +15,7 @@ import store from './store';
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.use(VCharts);
 
 router.beforeEach((to, from, next) => {
 
