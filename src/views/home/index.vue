@@ -1,7 +1,9 @@
 <template>
   <div>
+    <div class="filter-box">活动每天总报名人数:</div>
+    <ve-line :data="chartData"></ve-line>
     <el-row>
-      <el-col :span="12">
+      <el-col :sm="12" :xs="24">
         <div class="filter-box">
           报名详情：
           <el-select
@@ -18,11 +20,11 @@
             ></el-option>
           </el-select>
         </div>
-        <ve-histogram :data="chartData"></ve-histogram>
+        <ve-histogram :data="chartData1"></ve-histogram>
       </el-col>
-      <el-col :span="12">
-        <div class="filter-box">活动总人数:</div>
-        <ve-pie :data="chartData1"></ve-pie>
+      <el-col :sm="12" :xs="24">
+        <div class="filter-box">活动报名总人数:</div>
+        <ve-pie :data="chartData2"></ve-pie>
       </el-col>
     </el-row>
   </div>
@@ -42,6 +44,10 @@ export default {
         rows: []
       },
       chartData1: {
+        columns: ["日期", "报名人数"],
+        rows: []
+      },
+      chartData2: {
         columns: ["活动", "报名人数"],
         rows: []
       }
@@ -60,15 +66,34 @@ export default {
 
       Promise.all(activityListReq).then(allActivityData => {
         console.log(allActivityData);
-        const rows = [];
+        const rows2 = [];
         activityList.forEach((item, index) => {
-          rows.push({
+          rows2.push({
             活动: item.name,
             报名人数: allActivityData[index].data.length
           });
-          console.log(rows);
-          this.chartData1.rows = rows;
+          this.chartData2.rows = rows2;
         });
+
+        const numbers = {};
+        allActivityData.forEach(item => {
+          item.data.forEach(i => {
+            let date = moment(new Date(i.create_time)).format("MM/DD");
+            if (numbers[date]) {
+              numbers[date] = numbers[date] + 1;
+            } else {
+              numbers[date] = 1;
+            }
+          });
+        });
+        let rows = [];
+        Object.keys(numbers).forEach(d => {
+          rows.push({
+            日期: d,
+            报名人数: numbers[d]
+          });
+        });
+        this.chartData.rows = rows;
       });
     });
   },
@@ -92,7 +117,7 @@ export default {
             报名人数: numbers[d]
           });
         });
-        this.chartData.rows = rows;
+        this.chartData1.rows = rows;
       });
     }
   }
@@ -114,9 +139,8 @@ export default {
 }
 
 .filter-box {
-  margin-top: 40px;
+  margin: 10px 0 10px;
   font-size: 14px;
-  margin-bottom: 40px;
   height: 32px;
   line-height: 32px;
 }
