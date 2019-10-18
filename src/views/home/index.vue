@@ -10,7 +10,7 @@
             v-model="activityName"
             placeholder="请选择"
             size="small"
-            @change="findEnorllList()"
+            @change="findEnrollList()"
           >
             <el-option
               v-for="item in activityList"
@@ -23,7 +23,7 @@
         <ve-histogram :data="chartData1"></ve-histogram>
       </el-col>
       <el-col :sm="12" :xs="24">
-        <div class="filter-box">活动报名总人数:</div>
+        <div class="filter-box">活动报名总人数({{totalEnroll}}人):</div>
         <ve-pie :data="chartData2"></ve-pie>
       </el-col>
     </el-row>
@@ -31,12 +31,13 @@
 </template>
 <script>
 import moment from "moment";
-import { findEnorllAllApi } from "@/api/activity.js";
+import { findEnrollAllApi } from "@/api/activity.js";
 import { findAllActivityApi } from "@/api/activity-edit.js";
 
 export default {
   data() {
     return {
+      totalEnroll: 0,
       activityList: [],
       activityName: "",
       chartData: {
@@ -58,11 +59,13 @@ export default {
       const activityList = res.data;
       this.activityList = activityList;
       this.activityName = activityList[0].name;
-      this.findEnorllList();
+      this.findEnrollList();
       let activityListReq = [];
       activityList.forEach(item => {
-        activityListReq.push(findEnorllAllApi(item.name));
+        activityListReq.push(findEnrollAllApi(item.name));
       });
+
+      this.totalEnroll = 0;
 
       Promise.all(activityListReq).then(allActivityData => {
         console.log(allActivityData);
@@ -72,6 +75,7 @@ export default {
             活动: item.name,
             报名人数: allActivityData[index].data.length
           });
+          this.totalEnroll += allActivityData[index].data.length;
           this.chartData2.rows = rows2;
         });
 
@@ -98,8 +102,8 @@ export default {
     });
   },
   methods: {
-    findEnorllList() {
-      findEnorllAllApi(this.activityName).then(res => {
+    findEnrollList() {
+      findEnrollAllApi(this.activityName).then(res => {
         console.log(res);
         let numbers = {};
         res.data.forEach(item => {

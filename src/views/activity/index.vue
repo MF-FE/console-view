@@ -21,13 +21,13 @@
     </div>
     <el-table :data="enrollData.lists" style="width: 100%">
       <el-table-column prop="activityName" label="活动名"></el-table-column>
-      <el-table-column prop="userName" label="姓名"></el-table-column>
-      <el-table-column prop="sex" label="性别" width="100"></el-table-column>
+      <el-table-column prop="userName" label="姓名" width="100"></el-table-column>
+      <el-table-column prop="sex" label="性别" width="80"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
-      <el-table-column prop="province" label="省份" width="100"></el-table-column>
-      <el-table-column prop="city" label="城市" width="100"></el-table-column>
-      <el-table-column prop="source" label="来源" width="100"></el-table-column>
-      <el-table-column prop="createdAt" label="提交时间"></el-table-column>
+      <el-table-column prop="province" label="省份"></el-table-column>
+      <el-table-column prop="city" label="城市" ></el-table-column>
+      <el-table-column prop="source" label="来源"></el-table-column>
+      <el-table-column prop="createdAt" label="提交时间" width="200"></el-table-column>
     </el-table>
     <div class="foot-section">
       <el-pagination
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { findEnorllListApi, downEnorllExcelApi } from "@/api/activity";
+import { findEnrollListApi, downEnrollExcelApi } from "@/api/activity";
 import { findAllActivityApi } from "@/api/activity-edit";
 import moment from "moment";
 
@@ -93,14 +93,14 @@ export default {
   methods: {
     initEnrollData() {
       this.currentPage = 1;
-      this.findEnorllData();
+      this.findEnrollData();
     },
     changePage(pageNo) {
       this.currentPage = pageNo;
-      this.findEnorllData();
+      this.findEnrollData();
     },
-    findEnorllData() {
-      findEnorllListApi(this.activityName, this.currentPage).then(res => {
+    findEnrollData() {
+      findEnrollListApi(this.activityName, this.currentPage).then(res => {
         const enrollData = res.data;
         enrollData.lists.forEach(item => {
           item.createdAt = moment(new Date(item.createdAt)).format(
@@ -111,7 +111,7 @@ export default {
       });
     },
     downExcel() {
-      downEnorllExcelApi(this.activityName).then(res => {
+      downEnrollExcelApi(this.activityName).then(res => {
         window.open(res.data);
       });
     }
