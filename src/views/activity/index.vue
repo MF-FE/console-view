@@ -26,6 +26,7 @@
       <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="province" label="省份"></el-table-column>
       <el-table-column prop="city" label="城市" ></el-table-column>
+      <el-table-column prop="dealer" label="经销商" ></el-table-column>
       <el-table-column prop="source" label="来源"></el-table-column>
       <el-table-column prop="createdAt" label="提交时间" width="200"></el-table-column>
     </el-table>
