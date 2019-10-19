@@ -26,7 +26,7 @@
           <i @click="toggleNav" class="toggle-btn" :class="toggleBtnIcon"></i>
         </div>
         <div class="head-user">
-          <el-avatar :src="logo" size="small"></el-avatar>
+          <el-avatar :src="$store.getters.adminRole=='USER'?user:admin" size="small"></el-avatar>
           <el-dropdown @command="logout">
             <span class="el-dropdown-link">
               {{$store.state.userInfo && $store.state.userInfo.nickname || $store.state.userInfo && $store.state.userInfo.username}}
@@ -85,12 +85,16 @@
 </style>
 
 <script>
+import admin from "@/assets/admin.png";
+import user from "@/assets/user.png";
 import logo from "@/assets/logo.png";
 export default {
   data() {
     return {
       isCollapse: false,
-      logo
+      admin,
+      logo,
+      user
     };
   },
   mounted() {},
