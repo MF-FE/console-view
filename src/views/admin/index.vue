@@ -34,7 +34,7 @@
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" label-width="40px">
-          <el-input v-model="form.password" autocomplete="off"></el-input>
+          <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限">
           <br />
@@ -64,7 +64,7 @@
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" label-width="40px">
-          <el-input v-model="form.password" autocomplete="off" placeholder="留空,为不修改密码"></el-input>
+          <el-input type="password" v-model="form.password" autocomplete="off" placeholder="留空,为不修改密码"></el-input>
         </el-form-item>
         <el-form-item label="权限">
           <br />
